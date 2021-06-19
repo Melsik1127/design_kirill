@@ -4,6 +4,13 @@ from time import sleep
 import sqlite3
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
+
+connect = sqlite3.connect("users.db")
+cursor = connect.cursor()
+user = 646741803
+cursor.execute("UPDATE users SET full_version = True WHERE id = (?)", (user, ))
+connect.commit()
+
 #variables
 #original - 1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4
 #test - 1600740144:AAFpFngQxwH528CPMaZXPG_X-qmvvCgHjM4
