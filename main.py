@@ -5,9 +5,9 @@ import sqlite3
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 #variables
-#1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4
-
-TOKEN = "1600740144:AAFpFngQxwH528CPMaZXPG_X-qmvvCgHjM4"
+#original - 1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4
+#test - 1600740144:AAFpFngQxwH528CPMaZXPG_X-qmvvCgHjM4
+TOKEN = "1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4"
 bot = telebot.TeleBot(TOKEN)
 
 #cursor.execute("""UPDATE users SET full_version = True WHERE id = 846352856""")
