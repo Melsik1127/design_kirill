@@ -161,17 +161,18 @@ def activate_6_month(message):
 
     f = open('month_6.txt', 'r', encoding='utf-8')
     line = f.readline()
-    nn = False
+    key_found = False
     for line in f:
-        if message.text == line.replace("\n",""):
-            nn = True
+        line = line.replace("\n","")
+        if message.text == line:
+            key_found = True
             connect = sqlite3.connect("users.db")
             cursor = connect.cursor()
             user = message.chat.id
             cursor.execute("UPDATE users SET full_version = '1' WHERE id = (?)", (user, ))
             connect.commit()
             bot.send_message(message.chat.id, "✅Поздравляю! Теперь у вас есть полный доступ", reply_markup=inlineKeyboard)
-    if nn == False:
+    if key_found == False:
         bot.send_message(message.chat.id, "❌Упс.. Это неверный ключ", reply_markup=inlineKeyboard)
     f.close()
 
