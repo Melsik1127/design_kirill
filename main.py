@@ -9,7 +9,7 @@ print(sqlite3.sqlite_version)
 connect = sqlite3.connect("users.db")
 cursor = connect.cursor()
 user = 646741803
-cursor.execute("UPDATE users SET full_version = False WHERE id = (?)", (user, ))
+cursor.execute("UPDATE users SET full_version = 'False' WHERE id = (?)", (user, ))
 connect.commit()
 
 #variables
@@ -172,7 +172,7 @@ def activate_6_month(message):
             connect = sqlite3.connect("users.db")
             cursor = connect.cursor()
             user = message.chat.id
-            cursor.execute("UPDATE users SET full_version = True WHERE id = (?)", (user, ))
+            cursor.execute("UPDATE users SET full_version = 'True' WHERE id = (?)", (user, ))
             connect.commit()
             bot.send_message(message.chat.id, "✅Поздравляю! Теперь у вас есть полный доступ", reply_markup=inlineKeyboard)
     if nn == False:
@@ -229,7 +229,7 @@ def find_file(message):
                     connect = sqlite3.connect("users.db")
                     cursor = connect.cursor()
                     user = message.chat.id
-                    cursor.execute("UPDATE users SET trial_version = False WHERE id = (?)", (user, ))
+                    cursor.execute("UPDATE users SET trial_version = 'False' WHERE id = (?)", (user, ))
                     connect.commit()
             except:
                 inlineKeyboard = InlineKeyboardMarkup(row_width=1)
