@@ -6,11 +6,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeybo
 
 print(sqlite3.sqlite_version)
 
-connect = sqlite3.connect("users.db")
-cursor = connect.cursor()
-user = 646741803
-cursor.execute("UPDATE users SET full_version = 'False' WHERE id = (?)", (user, ))
-connect.commit()
+
 
 #variables
 #original - 1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4
@@ -37,7 +33,7 @@ def begin(message):
 
         """)
 
-        user_id = [message.chat.id, False, True, "0"]
+        user_id = [message.chat.id, "0", "1", "0"]
         cursor.execute("INSERT INTO users VALUES(?,?,?,?);", (user_id))
         connect.commit()
     except:
@@ -172,7 +168,7 @@ def activate_6_month(message):
             connect = sqlite3.connect("users.db")
             cursor = connect.cursor()
             user = message.chat.id
-            cursor.execute("UPDATE users SET full_version = 'True' WHERE id = (?)", (user, ))
+            cursor.execute("UPDATE users SET full_version = '1' WHERE id = (?)", (user, ))
             connect.commit()
             bot.send_message(message.chat.id, "✅Поздравляю! Теперь у вас есть полный доступ", reply_markup=inlineKeyboard)
     if nn == False:
@@ -229,7 +225,7 @@ def find_file(message):
                     connect = sqlite3.connect("users.db")
                     cursor = connect.cursor()
                     user = message.chat.id
-                    cursor.execute("UPDATE users SET trial_version = 'False' WHERE id = (?)", (user, ))
+                    cursor.execute("UPDATE users SET trial_version = '0' WHERE id = (?)", (user, ))
                     connect.commit()
             except:
                 inlineKeyboard = InlineKeyboardMarkup(row_width=1)
