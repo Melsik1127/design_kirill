@@ -6,11 +6,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeybo
 
 print(sqlite3.sqlite_version)
 
-connect = sqlite3.connect("users.db")
-cursor = connect.cursor()
-user = 646741803
-cursor.execute("UPDATE users SET full_version = False WHERE id = (?)", (user, ))
-connect.commit()
+
 
 #variables
 #original - 1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4
@@ -37,7 +33,7 @@ def begin(message):
 
         """)
 
-        user_id = [message.chat.id, False, True, "0"]
+        user_id = [message.chat.id, "0", "1", "0"]
         cursor.execute("INSERT INTO users VALUES(?,?,?,?);", (user_id))
         connect.commit()
     except:
@@ -165,17 +161,18 @@ def activate_6_month(message):
 
     f = open('month_6.txt', 'r', encoding='utf-8')
     line = f.readline()
-    nn = False
+    key_found = False
     for line in f:
-        if message.text == line.replace("\n",""):
-            nn = True
+        line = line.replace("\n","")
+        if message.text == line:
+            key_found = True
             connect = sqlite3.connect("users.db")
             cursor = connect.cursor()
             user = message.chat.id
-            cursor.execute("UPDATE users SET full_version = True WHERE id = (?)", (user, ))
+            cursor.execute("UPDATE users SET full_version = '1' WHERE id = (?)", (user, ))
             connect.commit()
             bot.send_message(message.chat.id, "✅Поздравляю! Теперь у вас есть полный доступ", reply_markup=inlineKeyboard)
-    if nn == False:
+    if key_found == False:
         bot.send_message(message.chat.id, "❌Упс.. Это неверный ключ", reply_markup=inlineKeyboard)
     f.close()
 
@@ -229,7 +226,7 @@ def find_file(message):
                     connect = sqlite3.connect("users.db")
                     cursor = connect.cursor()
                     user = message.chat.id
-                    cursor.execute("UPDATE users SET trial_version = False WHERE id = (?)", (user, ))
+                    cursor.execute("UPDATE users SET trial_version = '0' WHERE id = (?)", (user, ))
                     connect.commit()
             except:
                 inlineKeyboard = InlineKeyboardMarkup(row_width=1)
@@ -445,4 +442,4 @@ def data(call):
             inlineKeyboard.row(butt_3)
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
 <b>Выберите способ оплаты подписки</b>""", reply_markup=inlineKeyboard, parse_mode="html")
-bot.polling()
+bot.polling(True)
