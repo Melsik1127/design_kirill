@@ -1,8 +1,9 @@
 from sqlite3.dbapi2 import Cursor
 import telebot
 from time import sleep 
+from telebot import types
 import sqlite3
-from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedia, InputMediaPhoto, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 print(sqlite3.sqlite_version)
 
@@ -58,27 +59,31 @@ def begin(message):
     if result_1 == "1":
         start_result = "Функции разблокированы:\n✅ Функция запроса файла с сайтов UI8.net, <a href = 'https://craftwork.design'>craftwork</a>, ls.graphics, <a href = 'https://www.freepik.com/profile/preagreement/getstarted'>freepik premium</a>"
     if result_1 == "0" and result_2 == "1":
-        start_result = "Функции разблокированы:\n✅ Функция запроса файла с сайта ui8.net (пробная версия)"
+        start_result = "Функции разблокированы:\n✅ Функция запроса файла с сайта ui8.net (пробная версия)\n🔒 Остальные функции недоступны"
     if result_1 == "0" and result_2 == "0":
-        start_result = ""
+        start_result = "🔒Функции недоступны"
 
     #replykeyboard клавиши
     inlineKeyboard = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard = True)
-    inlineKeyboard.row("Запросить файл")
-    inlineKeyboard.row("Подробности")
-    inlineKeyboard.row("Полный доступ")
-
+    inlineKeyboard.row("📥 Запросить файл")
+    inlineKeyboard.row("💎 Полный доступ")
+    inlineKeyboard.row("🔍 Поиск клиента")
+    inlineKeyboard.row("📖 Обучение")
+    inlineKeyboard.row("📈 Продвижение")
+    inlineKeyboard.row("💰 Мой баланс")
+    inlineKeyboard.row("ℹ️ Подробности")
     
 
-    bot.send_message(message.chat.id, start_result + """
+    bot.send_photo(message.chat.id, photo=open('img/1.jpg', 'rb'), caption=start_result + """
     
 Наш бот предоставляет безлимитный доступ к сайтам UI8.net, <a href = 'https://craftwork.design'>craftwork</a>, ls.graphics, <a href = 'https://www.freepik.com/profile/preagreement/getstarted'>freepik premium</a> и экономит ваше время и ваши деньги
 
-💫 С помощью нашего бота можно скачивать любые файлы, которые есть на сайте: шрифты, иконки, иллюстрации, UI-киты, мокапы и многое другое. 
+💫 С помощью нашего бота можно скачивать любые файлы, которые есть на сайте: шрифты, иконки, иллюстрации, UI-киты, мокапы и многое другое.
 
-🚀 Благодаря регулярным обновлениям файлов и постоянным улучшениям, бот успешно работает уже более года. Сотни пользователей, ежедневно скачивают тысячи файлов через нашего бота
+🚀 Благодаря регулярным обновлениям файлов и постоянным улучшениям, бот успешно работает и функцианирует
+Сотни пользователей, ежедневно скачивают множество файлов, получают клиентов, учатся, продвигают свои работы и делают свою жизнь лучше
 
-""", reply_markup=inlineKeyboard, parse_mode='html', disable_web_page_preview = True)
+""", reply_markup=inlineKeyboard, parse_mode='html', timeout=200)
 
 @bot.message_handler(commands=['add_link'])
 def add_link(message):
@@ -118,39 +123,48 @@ def text(message):
     print("text")
     
     #Запросить файл 1
-    if message.text == "Запросить файл":
+    if message.text == "📥 Запросить файл":
         global rules_true
         rules_true = True
         markup = InlineKeyboardMarkup(row_width=1)
         but_1 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
         markup.add(but_1)
-        msg = bot.send_message(message.chat.id,text = """
-🎁 Запросить файл
+        msg = bot.send_photo(message.chat.id, photo=open("img/2.jpg", "rb"), caption = """
+📥 Запросить файл
 
-Пришли ссылку на нужный материал и бот отправит ссылку на файл для скачивания.""", reply_markup=markup)
+Пришлите ссылку на нужный материал и бот отправит ссылку на файл для скачивания.
+
+🔥 Все элементарно просто и быстро
+Жду ссылку от вас...""", reply_markup=markup)
         bot.register_next_step_handler(msg, find_file)
     #Подробности 1
-    if message.text == "Подробности":
+    if message.text == "🔍 Поиск клиента" or message.text == "📖 Обучение" or message.text == "📈 Продвижение" or message.text == "💰 Мой баланс" or message.text == "ℹ️ Подробности":
         markup = InlineKeyboardMarkup(row_width=1)
         but_1 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
         markup.add(but_1)
-        bot.send_message(message.chat.id, text = """что либо, для заполнения и проверки работоспособности кнопки""", reply_markup=markup)
+        bot.send_message(message.chat.id, text = """Информация в разработке""", reply_markup=markup)
     #Полный доступ 1
-    if message.text == "Полный доступ":
+    if message.text == "💎 Полный доступ":
+
         inlineKeyboard = InlineKeyboardMarkup(row_width=1)
-        butt_1 = InlineKeyboardButton("🌕6 месяцев", callback_data="month_6")
-        butt_2 = InlineKeyboardButton("🌕12 месяцев", callback_data="month_12")
-        butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
+        butt_1 = InlineKeyboardButton("🌘 3 месяца", callback_data="month_3")
+        butt_2 = InlineKeyboardButton("🌗 6 месяцев", callback_data="month_6")
+        butt_3 = InlineKeyboardButton("🌕 12 месяцев", callback_data="month_12")
         inlineKeyboard.add(butt_1, butt_2, butt_3)
 
         bot.send_message(message.chat.id, text = """
 💎 Доступ к боту
 
 
-После успешной оплаты, ты моментально получаешь безлимитный доступ к боту с тысячам качественных ресурсов, созданных профессиональными дизайнерами. Общая стоимость всех ресурсов на сайте превышает 150,000$! а также к другим функциям бота
+После успешной оплаты, вы моментально получаете безлимитный доступ к боту с тысячам качественных ресурсов, созданных профессиональными дизайнерами. Общая стоимость всех ресурсов на сайтах превышает 150,000$!Также будет открыт доступ к другим функциям бота
 
-Доступ на данный момент возможен сразу на целый год 🌕 12 месяцев. т.к дается заказ на сумму тарифа + У нас нет ограничений на загрузки, в отличие от сайта.
-Выбери данный тариф нажав на его""", reply_markup=inlineKeyboard)
+Доступ возможен: 
+🌘 На три месяца 
+🌗 На пол года
+🌕 На год
+*При тарифе пол года и год - вам дается клиент для того, чтобы бот обошолся вам в 0 руб.
+
+👇🏻 Выберите удобный для вас тариф: """, reply_markup=inlineKeyboard)
 
 #вторая часть активации, 6 месяцев
 def activate_6_month(message):
@@ -305,35 +319,41 @@ def data(call):
         #Полный доступ 2
         if call.data == "btn3":
             inlineKeyboard = InlineKeyboardMarkup(row_width=1)
-            butt_1 = InlineKeyboardButton("🌕6 месяцев", callback_data="month_6")
-            butt_2 = InlineKeyboardButton("🌕12 месяцев", callback_data="month_12")
-            butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
+            butt_1 = InlineKeyboardButton("🌘 3 месяца", callback_data="month_3")
+            butt_2 = InlineKeyboardButton("🌗 6 месяцев", callback_data="month_6")
+            butt_3 = InlineKeyboardButton("🌕 12 месяцев", callback_data="month_12")
             inlineKeyboard.add(butt_1, butt_2, butt_3)
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
-💎 Доступ к боту
+            bot.send_message(call.message.chat.id, text = """
+    💎 Доступ к боту
 
 
-После успешной оплаты, ты моментально получаешь безлимитный доступ к боту с тысячам качественных ресурсов, созданных профессиональными дизайнерами. Общая стоимость всех ресурсов на сайте превышает 150,000$! а также к другим функциям бота
+    После успешной оплаты, вы моментально получаете безлимитный доступ к боту с тысячам качественных ресурсов, созданных профессиональными дизайнерами. Общая стоимость всех ресурсов на сайтах превышает 150,000$!Также будет открыт доступ к другим функциям бота
 
-Доступ на данный момент возможен сразу на целый год 🌕 12 месяцев. т.к дается заказ на сумму тарифа + У нас нет ограничений на загрузки, в отличие от сайта.
-Выбери данный тариф нажав на его""", reply_markup=inlineKeyboard)
+    Доступ возможен: 
+    🌘 На три месяца 
+    🌗 На пол года
+    🌕 На год
+    *При тарифе пол года и год - вам дается клиент для того, чтобы бот обошолся вам в 0 руб.
+
+    👇🏻 Выберите удобный для вас тариф: """, reply_markup=inlineKeyboard)
         #тариф - 12 месяцев
         if call.data == "month_12":
 
             inlineKeyboard = InlineKeyboardMarkup(row_width=2)
             butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy")
-            butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode")
+            butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_12")
             butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2, butt_3)
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/4.jpg", "rb"), caption = """
 Полный доступ к боту на 🌕 12 месяцев
 
 После оплаты доступ к боту и к его функциям будет открыт моментально. Оплата возможна любым удобным способом.
 
-💸 Стоимость: 1499₽ (это всего ~125₽ в месяц)
+💸 Стоимость: 990₽ *Экономия 590₽
++Предоставление клиента на сумму тарифа 
         """, reply_markup=inlineKeyboard)
         
 
@@ -342,83 +362,145 @@ def data(call):
 
             inlineKeyboard = InlineKeyboardMarkup(row_width=2)
             butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy_2")
-            butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode")
+            butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_6")
             butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2, butt_3)
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
-Полный доступ к боту на 🌕 6 месяцев
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/5.jpg", "rb"), caption = """
+Полный доступ к боту на 🌗 6 месяцев
 
 После оплаты доступ к боту и к его функциям будет открыт моментально. Оплата возможна любым удобным способом.
 
-💸 Стоимость: 990₽ (это всего ~165₽ в месяц)
+💸 Стоимость: 990₽ *Экономия 590₽
++Предоставление клиента на сумму тарифа 
         """, reply_markup=inlineKeyboard)
+    
+
+        if call.data == "month_3":
+    
+            inlineKeyboard = InlineKeyboardMarkup(row_width=2)
+            butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy_3")
+            butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_3")
+            butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
+            inlineKeyboard.row(butt_1)
+            inlineKeyboard.row(butt_2, butt_3)
+
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/6.jpg","rb"), reply_markup=inlineKeyboard, caption= """
+Полный доступ к боту на 🌘 3 месяца
+
+После оплаты доступ к боту и к его функциям будет открыт моментально. Оплата возможна любым удобным способом.
+
+💸 Стоимость: 790₽
+        """)
+        #12
         #чем оплачивать?
         if call.data == "buy":
-            #connect = sqlite3.connect("users.db")
-            #cursor = connect.cursor()
-            #user = call.message.chat.id
-            #cursor.execute("UPDATE users SET full_version = True WHERE id = (?)", (user, ))
-            #connect.commit()
             inlineKeyboard = InlineKeyboardMarkup(row_width=1)
-            butt_1 = InlineKeyboardButton("🔑Активировать тариф", callback_data="activate")
-            butt_2 = InlineKeyboardButton("⬅️Назад", callback_data="month_12")
+            
+            butt_1 = InlineKeyboardButton("💳 Оплатить тариф", callback_data="open_payment")
+            butt_2 = InlineKeyboardButton("🔑 Активировать ключ", callback_data="activate")
+
 
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2)
             
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
-<b>Выберите способ оплаты подписки</b>
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/7.jpg", "rb"), caption = """
+Выберите способ оплаты подписки
 🏦 Доступные способы оплаты
     ├ Банковской картой
     ├ Электронным кошельком (Qiwi, YooMoney и тд.)
 
 Подписка будет активирована моментально после оплаты.
 
-<b>Вам нужен ключ, для его покупки перейдите на <a href='тут пока ничего нету ;)'>сайт</a></b>
+🔑 Вам нужен ключ
+Для его получения перейдите на сайт, совершите оплату тарифа, дождитесь момента пока вас перекинет на страницу с ключом, скопируйте, перейдите в бота и нажмите на кнопку активировать тариф, после втавьте скопированный ключ
         """, reply_markup=inlineKeyboard, parse_mode="html")
 
         if call.data == "buy_2":
+            #6
             #connect = sqlite3.connect("users.db")
             #cursor = connect.cursor()
             #user = call.message.chat.id
             #cursor.execute("UPDATE users SET full_version = True WHERE id = (?)", (user, ))
             #connect.commit()
             inlineKeyboard = InlineKeyboardMarkup(row_width=1)
-            butt_1 = InlineKeyboardButton("🔑Активировать тариф", callback_data="activate_2")
-            butt_2 = InlineKeyboardButton("⬅️Назад", callback_data="month_6")
+            
+            butt_1 = InlineKeyboardButton("💳 Оплатить тариф", callback_data="open_payment")
+            butt_2 = InlineKeyboardButton("🔑 Активировать ключ", callback_data="activate_2")
+
 
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2)
             
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
-<b>Выберите способ оплаты подписки</b>
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/7.jpg", "rb"), caption = """
+Выберите способ оплаты подписки
 🏦 Доступные способы оплаты
     ├ Банковской картой
     ├ Электронным кошельком (Qiwi, YooMoney и тд.)
 
 Подписка будет активирована моментально после оплаты.
 
-<b>Вам нужен ключ, для его покупки перейдите на <a href='https://www.digiseller.market/asp2/pay_wm.asp?id_d=3167666&lang=ru-RU'>сайт</a></b>
+🔑 Вам нужен ключ
+Для его получения перейдите на сайт, совершите оплату тарифа, дождитесь момента пока вас перекинет на страницу с ключом, скопируйте, перейдите в бота и нажмите на кнопку активировать тариф, после втавьте скопированный ключ
+        """, reply_markup=inlineKeyboard, parse_mode="html")
+        if call.data == "buy_3":
+            #3
+            #connect = sqlite3.connect("users.db")
+            #cursor = connect.cursor()
+            #user = call.message.chat.id
+            #cursor.execute("UPDATE users SET full_version = True WHERE id = (?)", (user, ))
+            #connect.commit()
+            inlineKeyboard = InlineKeyboardMarkup(row_width=1)
+            
+            butt_1 = InlineKeyboardButton("💳 Оплатить тариф", callback_data="open_payment")
+            butt_2 = InlineKeyboardButton("🔑 Активировать ключ", callback_data="activate_3")
+
+
+            inlineKeyboard.row(butt_1)
+            inlineKeyboard.row(butt_2)
+            
+
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/7.jpg", "rb"), caption = """
+Выберите способ оплаты подписки
+🏦 Доступные способы оплаты
+    ├ Банковской картой
+    ├ Электронным кошельком (Qiwi, YooMoney и тд.)
+
+Подписка будет активирована моментально после оплаты.
+
+🔑 Вам нужен ключ
+Для его получения перейдите на сайт, совершите оплату тарифа, дождитесь момента пока вас перекинет на страницу с ключом, скопируйте, перейдите в бота и нажмите на кнопку активировать тариф, после втавьте скопированный ключ
         """, reply_markup=inlineKeyboard, parse_mode="html")
         
         #активация ключа
         if call.data == "activate_2":
             
 
-            msg = bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = "Отправь сюда свой код активации")
+            msg = bot.send_message(chat_id=call.message.chat.id, text = "Отправь сюда свой код активации")
             bot.register_next_step_handler(msg, activate_6_month)
 
         #промокод
-        if call.data == "promocode":
+        if call.data == "promocode_3":
+            inlineKeyboard = InlineKeyboardMarkup(row_width=2)
+            butt_1 = InlineKeyboardButton("⬅️Назад", callback_data="month_3")
+            inlineKeyboard.row(butt_1)
+
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/3.jpg", "rb"), caption="💡 Если вы узнали о данном боте от того, кто продвигает его, для получения заработка и у вас есть определенный промокод, который даст вам скидку на покупку бота, то введите данный промокод ", reply_markup=inlineKeyboard)
+        if call.data == "promocode_6":
+            inlineKeyboard = InlineKeyboardMarkup(row_width=2)
+            butt_1 = InlineKeyboardButton("⬅️Назад", callback_data="month_6")
+            inlineKeyboard.row(butt_1)
+
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/3.jpg", "rb"), caption="💡 Если вы узнали о данном боте от того, кто продвигает его, для получения заработка и у вас есть определенный промокод, который даст вам скидку на покупку бота, то введите данный промокод ", reply_markup=inlineKeyboard)
+        if call.data == "promocode_12":
             inlineKeyboard = InlineKeyboardMarkup(row_width=2)
             butt_1 = InlineKeyboardButton("⬅️Назад", callback_data="month_12")
             inlineKeyboard.row(butt_1)
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = "Просто текст", reply_markup=inlineKeyboard)
+            bot.send_photo(chat_id=call.message.chat.id, photo=open("img/3.jpg", "rb"), caption="💡 Если вы узнали о данном боте от того, кто продвигает его, для получения заработка и у вас есть определенный промокод, который даст вам скидку на покупку бота, то введите данный промокод ", reply_markup=inlineKeyboard)
         
         #оплата картой
         if call.data == "buy_card":
