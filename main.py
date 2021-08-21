@@ -10,9 +10,9 @@ print(sqlite3.sqlite_version)
 
 
 #variables
-#original - 1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4
+#original - 1957302126:AAFlAwcT7c9OJ_gP8wq-W028PLKMI22g_r0
 #test - 1600740144:AAFpFngQxwH528CPMaZXPG_X-qmvvCgHjM4
-TOKEN = "1837012196:AAFNjaGSaiUt_u2fXV4dtsHshHjOJUYXUy4"
+TOKEN = "1957302126:AAFlAwcT7c9OJ_gP8wq-W028PLKMI22g_r0"
 bot = telebot.TeleBot(TOKEN)
 
 #cursor.execute("""UPDATE users SET full_version = True WHERE id = 846352856""")
