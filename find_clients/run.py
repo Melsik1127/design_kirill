@@ -22,7 +22,7 @@ def start(message):
     markup.add(but1)
 
 
-    bot.send_document(message.chat.id, open("img/1.gif", "rb"), reply_markup=markup)
+    bot.send_photo(message.chat.id, open("img/1.gif", "rb"), reply_markup=markup)
 
 
 
