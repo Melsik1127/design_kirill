@@ -9,6 +9,7 @@ bot = telebot.TeleBot("1995557521:AAEfIvCa9YxYDaGIZ-H_lScod2iTnaF5YNc")
 #command - start
 @bot.message_handler(commands=['start'])
 def start(message):
+    global user_name
     bot.send_message(message.chat.id, "3️⃣..")
     sleep(0.5)
     bot.send_message(message.chat.id, "2️⃣..")
@@ -21,7 +22,7 @@ def start(message):
     but1 = types.InlineKeyboardButton("Принять звонок", callback_data="accept_bell")
     markup.add(but1)
 
-
+    user_name = message.from_user.first_name
     bot.send_video(message.chat.id, open("img/gifs/1.gif", "rb"), reply_markup=markup)
 
 #реакция на кнопки
@@ -34,14 +35,14 @@ def data(call):
             markup.add(but1)
 
             bot.send_video(call.message.chat.id, open("img/gifs/2.gif", "rb"), caption="""
-🔥 ДОБРО ПОЖАЛОВАТЬ {user} в мир где нет конкуренции, а есть ты и твои клиенты 
+🔥 ДОБРО ПОЖАЛОВАТЬ "{user}" в мир где нет конкуренции, а есть ты и твои клиенты 
 
 Данный бот поможет найти тебе их с помощью уникального встроеного интелекта, а далее ты просто обретешь мощное сарафанное радио и у тебя появятся целых два источника доходов
 
 💰 Бот который находит клиентов 
 💰 Сарафанное радио 
 
-Жми кнопку “Продолжить” и следуй указателям 👇🏻""".format(user=call.message.from_user.first_name), reply_markup=markup)
+Жми кнопку “Продолжить” и следуй указателям 👇🏻""".format(user=call.user_name), reply_markup=markup)
 
 
 
