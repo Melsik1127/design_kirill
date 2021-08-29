@@ -22,7 +22,26 @@ def start(message):
     markup.add(but1)
 
 
-    bot.send_video(message.chat.id, open("img/1.gif", "rb"), reply_markup=markup)
+    bot.send_video(message.chat.id, open("img/gifs/1.gif", "rb"), reply_markup=markup)
+
+#реакция на кнопки
+@bot.callback_query_handler(func=lambda call: True)
+def data(call):
+    if call.message:
+        if call.data == "accept_bell":
+            markup = types.InlineKeyboardMarkup()
+            but1 = types.InlineKeyboardButton("Продолжить", callback_data="continue")
+            markup.add(but1)
+
+            bot.send_video(call.message.chat.id, open("img/gifs/2.gif", "rb"), caption="""
+🔥 ДОБРО ПОЖАЛОВАТЬ {user} в мир где нет конкуренции, а есть ты и твои клиенты 
+
+Данный бот поможет найти тебе их с помощью уникального встроеного интелекта, а далее ты просто обретешь мощное сарафанное радио и у тебя появятся целых два источника доходов
+
+💰 Бот который находит клиентов 
+💰 Сарафанное радио 
+
+Жми кнопку “Продолжить” и следуй указателям 👇🏻""".format(user=call.message.from_user.first_name), reply_markup=markup)
 
 
 

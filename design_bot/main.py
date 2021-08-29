@@ -137,23 +137,11 @@ def text(message):
 🔥 Все элементарно просто и быстро
 Жду ссылку от вас...""", reply_markup=markup)
         bot.register_next_step_handler(msg, find_file)
-    
-    if message.text == "🔍 Поиск клиента" or message.text == "📖 Обучение" or message.text == "📈 Продвижение" or message.text == "💰 Мой баланс" or message.text == "ℹ️ Подробности":
+    if message.text == "📖 Обучение" or message.text == "📈 Продвижение" or message.text == "💰 Мой баланс" or message.text == "ℹ️ Подробности":
+        bot.send_message(message.chat.id, "В разработке..")
+    if message.text == "🔍 Поиск клиента":
         markup = InlineKeyboardMarkup(row_width=1)
-        
-        #проверка на полную/пробную версию
-        connect = sqlite3.connect("users.db")
-        cursor = connect.cursor()
-        user_id = [message.chat.id]
-        cursor.execute("SELECT full_version FROM users WHERE id = (?);", user_id)
-        result = cursor.fetchall()
-        result = str(result).replace("[(", "")
-        result = str(result).replace(",)]", "")
-
-        if result == "1":
-            but_1 = InlineKeyboardButton("🔎  Найти клиента", url="https://t.me/klientobot")
-        if result == "0":
-            but_1 = InlineKeyboardButton("🔎  Найти клиента", callback_data="find_client")
+        but_1 = InlineKeyboardButton("🔎  Найти клиента", url="https://t.me/klientobot")
         markup.add(but_1)
         bot.send_photo(message.chat.id, photo=open("img/8.jpg","rb"), caption= """
 🔎 Найду клиентов на твои услуги за пару секунд
