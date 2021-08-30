@@ -35,7 +35,7 @@ def data(call):
             markup.add(but1)
 
             bot.send_video(call.message.chat.id, open("img/gifs/2.gif", "rb"), caption="""
-🔥 ДОБРО ПОЖАЛОВАТЬ "{user}" в мир где нет конкуренции, а есть ты и твои клиенты 
+🔥 ДОБРО ПОЖАЛОВАТЬ, {user}, в мир где нет конкуренции, а есть ты и твои клиенты 
 
 Данный бот поможет найти тебе их с помощью уникального встроеного интелекта, а далее ты просто обретешь мощное сарафанное радио и у тебя появятся целых два источника доходов
 
@@ -43,6 +43,22 @@ def data(call):
 💰 Сарафанное радио 
 
 Жми кнопку “Продолжить” и следуй указателям 👇🏻""".format(user=user_name), reply_markup=markup)
+        if call.data == "continue":
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            but1 = types.InlineKeyboardButton("web/ux/ui/motion\nДизайнер", callback_data="choice_1")
+            but2 = types.InlineKeyboardButton("Таргетолог/SMMщик", callback_data="choice_2")
+            but3 = types.InlineKeyboardButton("Маркетолог", callback_data="choice_3")
+            but4 = types.InlineKeyboardButton("IT-Специалист", callback_data="choice_4")
+            but5 = types.InlineKeyboardButton("Дргугой вид деятельности", callback_data="choice_5")
+            markup.add(but1, but2, but3, but4, but5)
+
+            bot.send_video(call.message.chat.id, open("img/gifs/3.gif", "rb"), caption="""
+🎉 Браво! Двигаешься в правильном направлении
+
+Прежде чем начать, хочу узнать кто ты из спецов?
+
+Выбери свою роль 👇🏻 """, reply_markup=markup)
+
 
 
 
