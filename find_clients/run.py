@@ -10,6 +10,25 @@ bot = telebot.TeleBot("1995557521:AAEfIvCa9YxYDaGIZ-H_lScod2iTnaF5YNc")
 #command - start
 @bot.message_handler(commands=['start'])
 def start(message):
+
+    try:
+        connect = sqlite3.connect("users.db")
+        cursor = connect.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS users(
+            id INT PRIMARY KEY,
+            full_version BOOLEAN,
+            trial_version BOOLEAN,
+            date TEXT
+        );
+
+        """)
+
+        user_id = [message.chat.id, "0", "1", "0"]
+        cursor.execute("INSERT INTO users VALUES(?,?,?,?);", (user_id))
+        connect.commit()
+    except:
+        pass
+
     global user_name
     bot.send_message(message.chat.id, "3️⃣...")
     sleep(0.5)
