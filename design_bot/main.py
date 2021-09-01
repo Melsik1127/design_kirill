@@ -373,7 +373,7 @@ def data(call):
             butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy_2")
             butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_6")
             butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
-            sleep(0.25)
+            
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2, butt_3)
 

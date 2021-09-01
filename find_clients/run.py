@@ -162,6 +162,7 @@ def data(call):
             inlineKeyboard = InlineKeyboardMarkup(row_width=2)
             butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy_3")
             butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_3")
+            butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2, butt_3)
 
@@ -172,12 +173,34 @@ def data(call):
 
 💸 Стоимость: 790₽
         """)
+        
+        if call.data == "btn3":
+            inlineKeyboard = InlineKeyboardMarkup(row_width=1)
+            butt_1 = InlineKeyboardButton("🌘 3 месяца", callback_data="month_3")
+            butt_2 = InlineKeyboardButton("🌗 6 месяцев", callback_data="month_6")
+            butt_3 = InlineKeyboardButton("🌕 12 месяцев", callback_data="month_12")
+            inlineKeyboard.add(butt_1, butt_2, butt_3)
+
+            bot.send_message(call.message.chat.id, text = """
+    💎 Доступ к боту
+
+
+    После успешной оплаты, вы моментально получаете безлимитный доступ к боту с тысячам качественных ресурсов, созданных профессиональными дизайнерами. Общая стоимость всех ресурсов на сайтах превышает 150,000$!Также будет открыт доступ к другим функциям бота
+
+    Доступ возможен: 
+    🌘 На три месяца 
+    🌗 На пол года
+    🌕 На год
+    *При тарифе пол года и год - вам дается клиент для того, чтобы бот обошолся вам в 0 руб.
+
+    👇🏻 Выберите удобный для вас тариф: """, reply_markup=inlineKeyboard)
 
         if call.data == "month_6":
     
             inlineKeyboard = InlineKeyboardMarkup(row_width=2)
             butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy_2")
             butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_6")
+            butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2, butt_3)
 
@@ -262,6 +285,7 @@ def data(call):
             inlineKeyboard = InlineKeyboardMarkup(row_width=2)
             butt_1 = InlineKeyboardButton("💸Оплатить", callback_data="buy")
             butt_2 = InlineKeyboardButton("🏷Промокод", callback_data="promocode_12")
+            butt_3 = InlineKeyboardButton("⬅️Назад", callback_data="btn3")
             inlineKeyboard.row(butt_1)
             inlineKeyboard.row(butt_2, butt_3)
 
