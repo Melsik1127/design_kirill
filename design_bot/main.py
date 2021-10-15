@@ -534,4 +534,4 @@ def data(call):
             inlineKeyboard.row(butt_3)
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
 <b>Выберите способ оплаты подписки</b>""", reply_markup=inlineKeyboard, parse_mode="html")
-bot.polling(True)
+bot.polling(none_stop=True)

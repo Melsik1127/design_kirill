@@ -353,4 +353,4 @@ def data(call):
 
 
 
-bot.polling()
+bot.polling(none_stop=True)
