@@ -22,23 +22,23 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands=['start'])
 def begin(message):
     #добавляю пользователя в бд (id, есть ли полная версия, есть ли пробный период)
-    try:
-        connect = sqlite3.connect("users.db")
-        cursor = connect.cursor()
-        cursor.execute("""CREATE TABLE IF NOT EXISTS users(
-            id INT PRIMARY KEY,
-            full_version BOOLEAN,
-            trial_version BOOLEAN,
-            date TEXT
-        );
+    #try:
+    connect = sqlite3.connect("users.db")
+    cursor = connect.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS users(
+        id INT PRIMARY KEY,
+        full_version BOOLEAN,
+        trial_version BOOLEAN,
+        date TEXT
+    );
 
-        """)
+    """)
 
-        user_id = [message.chat.id, "0", "1", "0"]
-        cursor.execute("INSERT INTO users VALUES(?,?,?,?);", (user_id))
-        connect.commit()
-    except:
-        pass
+    user_id = [message.chat.id, "0", "1", "0"]
+    cursor.execute("INSERT INTO users VALUES(?,?,?,?);", (user_id))
+    connect.commit()
+    #except:
+    #    pass
     
     #проверка на полную/пробную версию
     connect = sqlite3.connect("users.db")
