@@ -6,7 +6,7 @@ import sqlite3
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedia, InputMediaPhoto, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telebot import apihelper
 
-PROXY = 'socks5://62.112.126.13:1080'
+PROXY = 'socks5h://62.112.126.13:1080'
 apihelper.proxy = {'https': PROXY}
 
 print(sqlite3.sqlite_version)

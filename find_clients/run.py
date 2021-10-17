@@ -4,7 +4,7 @@ from time import sleep
 import sqlite3
 from telebot import apihelper
 
-PROXY = 'socks5://62.112.126.13:1080'
+PROXY = 'socks5h://62.112.126.13:1080'
 apihelper.proxy = {'https': PROXY}
 
 
