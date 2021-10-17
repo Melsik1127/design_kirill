@@ -4,6 +4,10 @@ from time import sleep
 from telebot import types
 import sqlite3
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedia, InputMediaPhoto, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telebot import apihelper
+
+PROXY = 'socks5://62.112.126.13:1080'
+apihelper.proxy = {'https': PROXY}
 
 print(sqlite3.sqlite_version)
 

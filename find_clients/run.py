@@ -2,6 +2,10 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from time import sleep
 import sqlite3
+from telebot import apihelper
+
+PROXY = 'socks5://62.112.126.13:1080'
+apihelper.proxy = {'https': PROXY}
 
 
 bot = telebot.TeleBot("1995557521:AAEfIvCa9YxYDaGIZ-H_lScod2iTnaF5YNc")
