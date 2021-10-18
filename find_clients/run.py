@@ -104,7 +104,7 @@ def data(call):
         
         if call.data == "find_client":
             markup = InlineKeyboardMarkup(row_width=1)
-            markup.add(InlineKeyboardButton("🔍 Найти", switch_inline_query_current_chat='@MotherSearchBot '))
+            markup.add(InlineKeyboardButton("🔍 Найти", switch_inline_query_current_chat=''))
             
             
             
