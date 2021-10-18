@@ -538,9 +538,5 @@ def data(call):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
 <b>Выберите способ оплаты подписки</b>""", reply_markup=inlineKeyboard, parse_mode="html")
 
-while True:
-    try:
-        bot.polling(none_stop=True, interval=0, timeout=20)
-    except Exception as e:
-        print(e.args)
-        sleep(2)
+
+bot.polling(none_stop=True)
