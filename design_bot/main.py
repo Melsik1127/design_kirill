@@ -540,4 +540,4 @@ def data(call):
 
 
 
-bot.polling(timeout=20)
+bot.polling(none_stop=True)
