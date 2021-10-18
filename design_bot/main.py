@@ -4,9 +4,7 @@ from time import sleep
 from telebot import types
 import sqlite3
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedia, InputMediaPhoto, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
-from telebot import apihelper
 
-apihelper.proxy = {"https": "socks5://143.198.237.236"}
 
 print(sqlite3.sqlite_version)
 
@@ -73,18 +71,16 @@ def begin(message):
     inlineKeyboard.row("🔍 Поиск клиента")
     inlineKeyboard.row("📖 Обучение")
     inlineKeyboard.row("📈 Продвижение")
-    inlineKeyboard.row("💰 Мой баланс")
-    inlineKeyboard.row("ℹ️ Подробности")
+    inlineKeyboard.row("💰 Мой баланс", "ℹ️ Подробности")
     
 
     bot.send_photo(message.chat.id, photo=open('img/1.jpg', 'rb'), caption=start_result + """
     
 Наш бот предоставляет безлимитный доступ к сайтам UI8.net, <a href = 'https://craftwork.design'>craftwork</a>, ls.graphics, <a href = 'https://www.freepik.com/profile/preagreement/getstarted'>freepik premium</a> и экономит ваше время и ваши деньги
 
-💫 С помощью нашего бота можно скачивать любые файлы, которые есть на сайте: шрифты, иконки, иллюстрации, UI-киты, мокапы и многое другое.
+💫 С помощью нашего бота можно скачивать любые приватеные файлы: шрифты, иконки, иллюстрации, UI-киты, мокапы и многое другое.
 
-🚀 Благодаря регулярным обновлениям файлов и постоянным улучшениям, бот успешно работает и функцианирует
-Сотни пользователей, ежедневно скачивают множество файлов, получают клиентов, учатся, продвигают свои работы и делают свою жизнь лучше
+🚀 Благодаря регулярным обновлениям и постоянным улучшениям, бот успешно работает и функцианирует
 
 """, reply_markup=inlineKeyboard, parse_mode='html', timeout=200)
 
@@ -133,12 +129,13 @@ def text(message):
         but_1 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
         markup.add(but_1)
         msg = bot.send_photo(message.chat.id, photo=open("img/2.jpg", "rb"), caption = """
-📥 Запросить файл
 
-Пришлите ссылку на нужный материал и бот отправит ссылку на файл для скачивания.
+<b>📥 Запросить файл</b>
 
-🔥 Все элементарно просто и быстро
-Жду ссылку от вас...""", reply_markup=markup)
+Пришлите ссылку на нужный материал с сайта ui8.net и бот отправит ссылку на файл для скачивания.
+
+🔥Все элементарно просто и быстро
+Жду ссылку от тебя...""", reply_markup=markup, parse_mode="html")
         bot.register_next_step_handler(msg, find_file)
     if message.text == "📖 Обучение" or message.text == "📈 Продвижение" or message.text == "💰 Мой баланс" or message.text == "ℹ️ Подробности":
         bot.send_message(message.chat.id, "В разработке..")
@@ -224,11 +221,33 @@ def find_file(message):
         result_2 = result
 
         if result_1 == "0" and result_2 == "0":
+            bot.send_video(message.chat.id, open("img/gifs/3.gif", "rb"), caption="""
+🎉 Супер! Нам с тобой по пути
+
+Перед тем, как я запущу тебе функцию по поиску клиентов, давай проверим твою подписку на главного бота @medesignbot""")
+            
+           
+            sleep(3)
+            bot.send_message(message.chat.id, "3️⃣...")
+            sleep(0.5)
+            bot.send_message(message.chat.id, "2️⃣...")
+            sleep(0.5)
+            bot.send_message(message.chat.id, "1️⃣...")
+            sleep(0.5)
+            
+            
             markup = InlineKeyboardMarkup(row_width=1)
-            butt_1 = InlineKeyboardButton("Полный доступ", callback_data="btn3")
-            butt_2 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
-            markup.add(butt_1, butt_2)
-            bot.send_message(message.chat.id, "У вас больше нету бесплатных попыток😞\nКупите полный доступ, чтобы иметь доступ ко всем платным данным:", reply_markup=markup)
+            butt_1 = InlineKeyboardButton("💎 Исправить", callback_data="btn3 ")
+            markup.add(butt_1)
+
+            bot.send_video(message.chat.id, open("img/gifs/4.gif", "rb"), caption="""
+⛔ Так, так... 
+
+У тебя нет подписки, чтобы пользоваться моими функциями
+
+Может, она истекла или ты не приобрел ее?
+
+👾 Давай исправим это!""", reply_markup=markup)
         else:
             #достаем ссылки из таблицы
             try:
@@ -241,10 +260,15 @@ def find_file(message):
                 result = str(result).replace(",)]", "")
 
                 inlineKeyboard = InlineKeyboardMarkup(row_width=1)
-                butt_1 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
+                butt_1 = InlineKeyboardButton("📤 Запросить новый файл", callback_data="find_new_file")
                 inlineKeyboard.add(butt_1)
                 
-                result_text = "Вот ваша ссылка:\n<a href={res}>файл</a>📄".format(res = result)
+                result_text = """
+<b>✅ Файл найден и сформирован</b>
+
+Чтобы скачать данный файл, просто нажми на текст ниже 
+
+<a href={res}>📥 Скачать файл</a>""".format(res = result)
                 bot.send_message(message.chat.id, result_text, parse_mode="html", reply_markup=inlineKeyboard)
                 if result_2 == "1":
                     connect = sqlite3.connect("users.db")
@@ -254,9 +278,12 @@ def find_file(message):
                     connect.commit()
             except:
                 inlineKeyboard = InlineKeyboardMarkup(row_width=1)
-                butt_1 = InlineKeyboardButton("⬅️Назад", callback_data="start_2")
+                butt_1 = InlineKeyboardButton("📤 Запросить новый файл", callback_data="find_new_file")
                 inlineKeyboard.add(butt_1)
-                bot.send_message(message.chat.id, "Увы, похоже в нашей базе нету этой ссылки😔", reply_markup=inlineKeyboard)
+                bot.send_message(message.chat.id, """
+✖️ Файл не найден
+
+💬 Мы получили ваш запрос, в течение суток загрузим файл в базу и бот отправит вам его """, reply_markup=inlineKeyboard, parse_mode="html")
     else:
         text(message)
 #вторая часть remove_link, удаление ссылок
@@ -320,6 +347,8 @@ def data(call):
         if call.data == "start_2":
             rules_true = False
             begin(call.message)
+        if call.data == "find_new_file":
+            find_file(call.message)
 
         #Подробности 2
         if call.data == "btn2":
