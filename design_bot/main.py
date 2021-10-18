@@ -237,7 +237,7 @@ def find_file(message):
             
             
             markup = InlineKeyboardMarkup(row_width=1)
-            butt_1 = InlineKeyboardButton("💎 Исправить", callback_data="btn3 ")
+            butt_1 = InlineKeyboardButton("💎 Исправить", callback_data="btn3")
             markup.add(butt_1)
 
             bot.send_video(message.chat.id, open("img/gifs/4.gif", "rb"), caption="""
@@ -274,6 +274,7 @@ def find_file(message):
                     connect = sqlite3.connect("users.db")
                     cursor = connect.cursor()
                     user = message.chat.id
+                    print(user)
                     cursor.execute("UPDATE users SET trial_version = '0' WHERE id = (?)", (user, ))
                     connect.commit()
             except:
@@ -348,6 +349,7 @@ def data(call):
             rules_true = False
             begin(call.message)
         if call.data == "find_new_file":
+            rules_true = True
             find_file(call.message)
 
         #Подробности 2
