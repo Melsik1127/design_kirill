@@ -4,8 +4,9 @@ from time import sleep
 import sqlite3
 from telebot import apihelper
 
-PROXY = 'socks5h://184.179.216.130:4145'
-apihelper.proxy = {'https': PROXY}
+apihelper.proxy = {"https": "socks5://159.69.204.30:10115"}
+
+print(sqlite3.sqlite_version)
 
 
 bot = telebot.TeleBot("1995557521:AAEfIvCa9YxYDaGIZ-H_lScod2iTnaF5YNc")
@@ -348,13 +349,9 @@ def data(call):
 
             bot.send_photo(chat_id=call.message.chat.id, photo=open("img/3.jpg", "rb"), caption="💡 Если вы узнали о данном боте от того, кто продвигает его, для получения заработка и у вас есть определенный промокод, который даст вам скидку на покупку бота, то введите данный промокод ", reply_markup=inlineKeyboard)
 
-
-
-
-
-
-
-
-
-
-bot.polling(none_stop=True)
+while True:
+    try:
+        bot.polling(none_stop=True, interval=0, timeout=20)
+    except Exception as e:
+        print(e.args)
+        sleep(2)

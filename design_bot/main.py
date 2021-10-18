@@ -6,8 +6,7 @@ import sqlite3
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedia, InputMediaPhoto, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telebot import apihelper
 
-PROXY = 'socks5h://184.179.216.130:4145'
-apihelper.proxy = {'https': PROXY}
+apihelper.proxy = {"https": "socks5://159.69.204.30:10115"}
 
 print(sqlite3.sqlite_version)
 
@@ -538,4 +537,10 @@ def data(call):
             inlineKeyboard.row(butt_3)
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text = """
 <b>Выберите способ оплаты подписки</b>""", reply_markup=inlineKeyboard, parse_mode="html")
-bot.polling(none_stop=True)
+
+while True:
+    try:
+        bot.polling(none_stop=True, interval=0, timeout=20)
+    except Exception as e:
+        print(e.args)
+        sleep(2)
