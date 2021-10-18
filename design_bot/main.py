@@ -539,8 +539,5 @@ def data(call):
 <b>Выберите способ оплаты подписки</b>""", reply_markup=inlineKeyboard, parse_mode="html")
 
 
-try:
-    bot.polling(timeout=30)
-except:
-    sleep(15)
-    bot.polling(timeout=30)
+
+bot.polling(timeout=20)
