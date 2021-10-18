@@ -2,9 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from time import sleep
 import sqlite3
-from telebot import apihelper
 
-apihelper.proxy = {"https": "socks5://143.198.237.236"}
 
 print(sqlite3.sqlite_version)
 
@@ -349,4 +347,8 @@ def data(call):
 
             bot.send_photo(chat_id=call.message.chat.id, photo=open("img/3.jpg", "rb"), caption="💡 Если вы узнали о данном боте от того, кто продвигает его, для получения заработка и у вас есть определенный промокод, который даст вам скидку на покупку бота, то введите данный промокод ", reply_markup=inlineKeyboard)
 
-bot.polling(none_stop=True)
+try:
+    bot.polling(timeout=30)
+except:
+    sleep(15)
+    bot.polling(timeout=30)
